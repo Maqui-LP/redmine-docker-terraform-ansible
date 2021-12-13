@@ -18,7 +18,15 @@
       - dirmngr
       - gnupg
       - libcurl4-openssl-dev
+      - mysql-server
+      - python3-pip
+      - python3-mysqldb
       - unzip
+
+- name: System | Install pymysql
+  become: yes
+  pip:
+    name: PyMySQL
 
 - name: System | Add Docker GPG apt key
   become: yes
