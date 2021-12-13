@@ -1,0 +1,28 @@
+---
+- name: Iptables | Allow related and established connections
+  become: yes
+  iptables:
+    chain: INPUT
+    ctstate: ESTABLISHED,RELATED
+
+- name: Iptables | Allow new connections
+  become: yes
+  iptables:
+    action: append
+    chain: INPUT
+    protocol: tcp
+    destination_port: "{{ item }}"
+    ctstate: NEW
+    jump: ACCEPT
+  with_items:
+    - "22"
+    - "80"
+    - "443"
+
+- name: Iptables | Allow loopback
+  become: yes
+  iptables:
+    action: append
+    in_interface: lo
+    chain: INPUT
+    jump: ACCEPT

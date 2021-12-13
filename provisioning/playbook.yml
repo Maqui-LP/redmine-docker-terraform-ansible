@@ -1,0 +1,12 @@
+---
+- name: Deploy Redmine
+  hosts: all
+  roles:
+    - common
+    - iptables
+    - app
+    - db
+    #- backups
+  vars_files:
+    - vars/all.yml
+    - vars/tf_ansible_vars.yml

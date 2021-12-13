@@ -1,0 +1,22 @@
+---
+# database
+db_host: localhost
+redmine_db_pass: password
+redmine_db_name: redmine
+redmine_db_user: redmine
+root_db_pass: root
+use_externalDB: "false"
+
+# redmine
+redmine_path: /usr/src/redmine
+redmine_user: redmine
+redmine_version: 4.2.3
+
+# nginx
+nginx_redmine_url: localhost
+
+# vagrant
+guest_user: vagrant
+
+# docker
+repo: https://github.com/Maqui-LP/redmine-docker-compose

@@ -1,0 +1,48 @@
+---
+- name: System | apt-get update
+  become: yes
+  apt:
+    update_cache: yes
+
+- name: System | Install common packages
+  become: yes
+  apt:
+    state: present
+    name:
+      - apt-transport-https
+      - autoconf
+      - build-essential
+      - ca-certificates
+      - curl
+      - software-properties-common
+      - dirmngr
+      - gnupg
+      - libcurl4-openssl-dev
+      - unzip
+
+- name: System | Add Docker GPG apt key
+  become: yes
+  apt_key:
+    url: https://download.docker.com/linux/ubuntu/gpg
+    state: present
+
+- name: System | Add Docker Repository
+  become: yes
+  apt_repository:
+    repo: deb https://download.docker.com/linux/ubuntu bionic stable
+    state: present
+    update_cache: yes
+
+- name: System | Update apt and install docker-ce
+  become: yes
+  apt: 
+    update_cache: yes 
+    name: docker-ce 
+    state: present
+
+- name: System | Install docker-compose
+  become: yes
+  get_url:
+    url: https://github.com/docker/compose/releases/download/v2.2.2/docker-compose-linux-x86_64
+    dest: /usr/local/bin/docker-compose
+    mode: u+x,g+x # ,o+x
