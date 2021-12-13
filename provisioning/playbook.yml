@@ -4,8 +4,8 @@
   roles:
     - common
     - iptables
-    - app
     - db
+    - app
     #- backups
   vars_files:
     - vars/all.yml
