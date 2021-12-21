@@ -1,40 +1,36 @@
 ---
-- name: app | Create user that will use docker 
-  become: yes
-  user:
-    name: "{{ redmine_user }}"
-    groups: docker
-    shell: /bin/bash
-    append: yes
-
 - name: app | clone docker-compose repo
-  #become_user: "{{ redmine_user }}"
   git:
     repo: "{{ repo }}" 
     dest: /tmp/compose
     force: yes
+  tags:
+  - repo
+  - compose
 
-- name: app | create .env.{{ var_environment }} file
-  #become_user: "{{ redmine_user }}"
+- name: app | create .env file
   copy: 
-    dest: /tmp/compose/.env.{{ var_environment }}
+    dest: /tmp/compose/.env
     content: | 
       REDMINE_DB_USERNAME={{ redmine_db_user }}
       REDMINE_DB_PASSWORD={{ redmine_db_pass }}
       REDMINE_DB_DATABASE={{ redmine_db_name }}
       DB_HOST={{ db_host }}
-      REDMINE_PATH={{ redmine_path }}
-      REDMINE_VERSION={{ redmine_version }}
-      RAILS_ENV={{ var_environment }}
+      SECRET_KEY_BASE={{ secret_key_base }}
     mode: 0644
+  tags:
+  - envfile
+  - compose
 
-# - name: app | run start script
-#   #become_user: "{{ redmine_user }}"
-#   become: yes
-#   shell: /tmp/compose/bin/start {{ var_environment }}
+- name: app | run start script
+  become: yes
+  shell: /tmp/compose/bin/start 
+  tags:
+  - start
+  - compose
 
 # - name: app | run start script
 #   become_user: "{{ redmine_user }}"
 #   become: yes
 #   script: 
-#     cmd: /tmp/compose/bin/start {{ var_environment }}
+#     cmd: /tmp/compose/bin/start

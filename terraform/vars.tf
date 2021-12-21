@@ -14,6 +14,11 @@ variable "use_externalDB" {
   default = "true"
 }
 
+variable "secret_key_base" {
+  type = string
+  default = "5a37811464e7d378488b0f073e2193b093682e4e21f5d6f3ae0a4e1781e61a351fdc878a843424e81c73fb484a40d23f92c8dafac4870e74ede6e5e174423010"
+}
+
 variable "var_environment" {
   type = string
   default = "production"
@@ -49,7 +54,7 @@ resource "local_file" "tf_ansible_vars" {
       redmine_db_pass = var.redmine_db_pass
       root_db_pass = var.root_db_pass
       use_externalDB = var.use_externalDB
-      var_environment = var.var_environment
+      secret_key_base = var.secret_key_base
     }
   ) 
   filename = "../provisioning/vars/tf_ansible_vars.yml"

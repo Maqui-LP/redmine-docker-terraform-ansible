@@ -6,7 +6,6 @@
     - iptables
     - db
     - app
-    #- backups
   vars_files:
     - vars/all.yml
     - vars/tf_ansible_vars.yml
